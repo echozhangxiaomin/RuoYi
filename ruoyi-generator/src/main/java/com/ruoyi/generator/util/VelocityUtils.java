@@ -132,7 +132,7 @@ public class VelocityUtils
         templates.add("vm/xml/mapper.xml.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
-            templates.add("vm/html/list.html.vm");
+            // templates.add("vm/html/list.html.vm");
         }
         else if (GenConstants.TPL_TREE.equals(tplCategory))
         {
@@ -144,9 +144,9 @@ public class VelocityUtils
             templates.add("vm/html/list.html.vm");
             templates.add("vm/java/sub-domain.java.vm");
         }
-        templates.add("vm/html/add.html.vm");
-        templates.add("vm/html/edit.html.vm");
-        templates.add("vm/sql/sql.vm");
+        // templates.add("vm/html/add.html.vm");
+        // templates.add("vm/html/edit.html.vm");
+        // templates.add("vm/sql/sql.vm");
         return templates;
     }
 
@@ -167,12 +167,12 @@ public class VelocityUtils
         String businessName = genTable.getBusinessName();
 
         String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
-        String mybatisPath = MYBATIS_PATH + "/" + moduleName;
+        String mybatisPath = MYBATIS_PATH + "/"+ StringUtils.replace(packageName,".","/") + moduleName;
         String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + businessName;
 
         if (template.contains("domain.java.vm"))
         {
-            fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
+            fileName = StringUtils.format("{}/model/{}.java", javaPath,moduleName, className);
         }
         if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory()))
         {
@@ -180,23 +180,23 @@ public class VelocityUtils
         }
         else if (template.contains("mapper.java.vm"))
         {
-            fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
+            fileName = StringUtils.format("{}/{}/mapper/{}Mapper.java", javaPath, moduleName,className);
         }
         else if (template.contains("service.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/I{}Service.java", javaPath, className);
+            fileName = StringUtils.format("{}/{}/service/I{}Service.java", javaPath, moduleName,className);
         }
         else if (template.contains("serviceImpl.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, className);
+            fileName = StringUtils.format("{}/{}/service/impl/{}ServiceImpl.java", javaPath,moduleName, className);
         }
         else if (template.contains("controller.java.vm"))
         {
-            fileName = StringUtils.format("{}/controller/{}Controller.java", javaPath, className);
+            fileName = StringUtils.format("{}/{}/controller/{}Controller.java", javaPath,moduleName, className);
         }
         else if (template.contains("mapper.xml.vm"))
         {
-            fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
+            fileName = StringUtils.format("{}/{}/{}Mapper.xml", mybatisPath, moduleName,className);
         }
         else if (template.contains("list.html.vm"))
         {

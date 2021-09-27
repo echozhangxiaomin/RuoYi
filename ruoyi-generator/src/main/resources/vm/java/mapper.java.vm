@@ -1,10 +1,8 @@
-package ${packageName}.mapper;
+package ${packageName}.${moduleName}.mapper;
 
 import java.util.List;
-import ${packageName}.domain.${ClassName};
-#if($table.sub)
-import ${packageName}.domain.${subClassName};
-#end
+import ${packageName}.${moduleName}.model.${ClassName};
+
 
 /**
  * ${functionName}Mapper接口
@@ -60,32 +58,6 @@ public interface ${ClassName}Mapper
      * @param ${pkColumn.javaField}s 需要删除的数据主键集合
      * @return 结果
      */
-    public int delete${ClassName}By${pkColumn.capJavaField}s(String[] ${pkColumn.javaField}s);
-#if($table.sub)
+    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}... ${pkColumn.javaField}s);
 
-    /**
-     * 批量删除${subTable.functionName}
-     * 
-     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
-     * @return 结果
-     */
-    public int delete${subClassName}By${subTableFkClassName}s(String[] ${pkColumn.javaField}s);
-    
-    /**
-     * 批量新增${subTable.functionName}
-     * 
-     * @param ${subclassName}List ${subTable.functionName}列表
-     * @return 结果
-     */
-    public int batch${subClassName}(List<${subClassName}> ${subclassName}List);
-    
-
-    /**
-     * 通过${functionName}主键删除${subTable.functionName}信息
-     * 
-     * @param ${pkColumn.javaField} ${functionName}ID
-     * @return 结果
-     */
-    public int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
-#end
 }

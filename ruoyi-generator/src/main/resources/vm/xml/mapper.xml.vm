@@ -117,31 +117,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
     </delete>
 
-    <delete id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="String">
+    <delete id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="${pkColumn.javaType}">
         delete from ${tableName} where ${pkColumn.columnName} in 
         <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
             #{${pkColumn.javaField}}
         </foreach>
     </delete>
-#if($table.sub)
-    
-    <delete id="delete${subClassName}By${subTableFkClassName}s" parameterType="String">
-        delete from ${subTableName} where ${subTableFkName} in 
-        <foreach item="${subTableFkclassName}" collection="array" open="(" separator="," close=")">
-            #{${subTableFkclassName}}
-        </foreach>
-    </delete>
-
-    <delete id="delete${subClassName}By${subTableFkClassName}" parameterType="${pkColumn.javaType}">
-        delete from ${subTableName} where ${subTableFkName} = #{${subTableFkclassName}}
-    </delete>
-
-    <insert id="batch${subClassName}">
-        insert into ${subTableName}(#foreach($column in $subTable.columns) $column.columnName#if($velocityCount != $subTable.columns.size()),#end#end) values
-		<foreach item="item" index="index" collection="list" separator=",">
-            (#foreach($column in $subTable.columns) #{item.$column.javaField}#if($velocityCount != $subTable.columns.size()),#end#end)
-        </foreach>
-    </insert>
-#end
 
 </mapper>
